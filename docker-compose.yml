@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  elasticsearch:
+    build: 
+      context: ./elasticsearch
+      dockerfile: dockerfile_elastic
+    environment:
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+    volumes:
+      - ./elasticsearch/es-data:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.0
+    ports:
+      - 5601:5601
+  jupyter:
+    build:
+      context: ./jupyter
+      dockerfile: dockerfile_jupyter
+    user: root
+    environment:
+      #NB_UID: 500
+      #NB_GID: 100
+      NB_UID: 1000
+      NB_GID: 1000
+      GRANT_SUDO: "yes"
+      TZ: "Asia/Tokyo"
+      JUPYTER_ENABLE_LAB: "yes"
+    ports:  
+      - "8888:8888"
+    volumes:
+      - "./jupyter/data:/home/jovyan/work"
+    privileged: true
+    command: start.sh jupyter lab --NotebookApp.token='' --no-browser

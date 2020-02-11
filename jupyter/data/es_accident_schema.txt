@@ -1,0 +1,77 @@
+{
+  "aliases" : {},
+  "mappings":{
+    "properties" : {
+      "sentence" : {
+        "type" : "text"
+      },
+      "category" : {
+        "type" : "keyword"
+      },
+      "scdv_vector" : {
+        "type" : "dense_vector",
+        "dims" : 1000
+      }
+    }
+  },
+  "settings": {
+    "index": {
+      "analysis": {
+        "tokenizer": {
+          "sudachi_tokenizer": {
+              "mode" : "search",
+              "settings_path" : "/usr/share/elasticsearch/config/sudachi/sudachi.json",
+              "resources_path" : "/usr/share/elasticsearch/config/sudachi/",
+              "type" : "sudachi_tokenizer",
+              "discard_punctuation" : "true"
+          }
+        },
+        "analyzer": {
+          "sudachi_analyzer": {
+            "filter": [
+              "sudachi_baseform",
+              "lowercase",
+              "my_posfilter",
+              "my_stopfilter"
+	    ],
+            "tokenizer": "sudachi_tokenizer",
+            "type": "custom"
+          }
+        },
+        "filter":{
+         "my_posfilter":{
+          "type":"sudachi_part_of_speech",
+          "stoptags":[
+            "接続詞","助動詞","助詞","記号","補助記号","名詞,数詞",
+            "名詞,普通名詞,助数詞可能"
+            ]
+         },"my_stopfilter":{
+          "type":"sudachi_ja_stop",
+          "stopwords":[
+            "は",
+            "です",
+            "する",
+            "いる",
+            "ため",
+            "ＣＭ",
+            "cm",
+            "CM",
+            "次",
+            "名",
+            "行う",
+            "等",
+            "者",
+            "際",
+            "こと",
+            "ある",
+            "この",
+            "その",
+            "そこ",
+            "これ"
+          ]
+         }
+        }
+      }
+    }
+  }
+}

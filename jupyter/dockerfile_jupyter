@@ -1,0 +1,19 @@
+FROM jupyter/datascience-notebook
+
+USER root
+COPY requirements.txt /tmp/ 
+RUN apt-get update -y && apt-get install vim sudo -y && \
+    python -m pip install --upgrade pip setuptools && \
+    python -m pip install -r /tmp/requirements.txt --no-cache-dir && \
+    python -m pip install https://object-storage.tyo2.conoha.io/v1/nc_2520839e1f9641b08211a5c85243124a/sudachi/SudachiDict_full-20200127.tar.gz && \
+    sudachipy link -t full && \
+    curl -L  "https://ipafont.ipa.go.jp/IPAexfont/ipaexg00201.zip" > font.zip && \
+    unzip font.zip && \
+    cp ipaexg00201/ipaexg.ttf /usr/share/fonts/truetype/ipaexg.ttf && \
+    echo "font.family : IPAexGothic" >>  /opt/conda/lib/python3.7/site-packages/matplotlib/mpl-data/matplotlibrc && \
+    rm -r ./.cache && \
+    jupyter serverextension enable --py jupyterlab && \
+    chown -R jovyan /opt/conda
+COPY sudachi.json /opt/conda/lib/python3.7/site-packages/sudachipy/resources/
+COPY sudachi.json /opt/conda/lib/python3.7/site-packages/ja_ginza_dict/sudachidict/
+WORKDIR /home/jovyan/work

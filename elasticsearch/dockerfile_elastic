@@ -1,0 +1,12 @@
+ARG ELASTIC_VER=7.5.0
+ARG ELASTIC_SUDACHI_VER=${ELASTIC_VER}-1.3.2
+ARG SUDACHI_VER=0.3.2
+
+FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VER}
+
+COPY sudachi.json /usr/share/elasticsearch/config/sudachi/
+COPY analysis-sudachi-elasticsearch7.5-1.3.2.zip /tmp/
+COPY system_full.dic /usr/share/elasticsearch/config/sudachi/
+
+RUN elasticsearch-plugin install file:///tmp/analysis-sudachi-elasticsearch7.5-1.3.2.zip && \
+rm /tmp/analysis-sudachi-elasticsearch7.5-1.3.2.zip 
