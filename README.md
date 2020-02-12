@@ -38,12 +38,14 @@ GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し�
   $ sudo apt install docker docker-compose
   ```
 - 初期設定を行う。ホスト側で以下を実行する。
+
   必要なディレクトリの作成やツールのダウンロードを行う。
   ```
   $ ./init.sh
   ```
 
 - docker-composeでコンテナを起動する。
+
   JupyterLab、Elasticsearch、Kibanaのコンテナが起動する。
   ```
   $ sudo docker-compose up
@@ -54,10 +56,12 @@ GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し�
   * http://[ホスト]:8888
 
 - Kibana
-  * http://[ホスト]:5601
+  * ホスト側からのアクセス : http://[ホスト]:5601
+  * コンテナ間のアクセス : http://kibana:5601
 
 - Elasticsearch
-  * http://[ホスト]:9800
+  * ホスト側からのアクセス : http://[ホスト]:9200
+  * コンテナ間のアクセス : http://elasticsearch:9200
 
 ## 使い方
 基本的にJupyter Lab上での作業となる。
