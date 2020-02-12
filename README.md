@@ -2,6 +2,7 @@
 
 ## 概要
 GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し、類義語検索や類義文検索を行う。
+環境はJupyter Lab、DBはElasticsearchを使用している。
 
 ## 環境
 
@@ -10,8 +11,8 @@ GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し�
 | 環境 | バージョン |
 | --- | --- |
 | Ubuntu | 18.04 |
-| Docker | 18.09.7 |
-| Docker Compose | 1.17.1 |
+| Docker | 19.03.5 |
+| Docker Compose | 1.25.0 |
 
 - Dockerイメージ
 
@@ -22,12 +23,13 @@ GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し�
 | Kibana | docker.elastic.co/kibana/kibana:7.5.0 |
 
 ## Dockerイメージ概要
-  -Jupyter Lab 
-    - Sudachi、Ginza導入
-    - matplitlib用の日本語フォント導入
+  -Jupyter Lab
+    * 機械学習用の各種ツールを導入
+    * Sudachi、Ginzaを導入
+    * matplitlib用の日本語フォントを導入
 
   - Elasticsearch 
-    - analysis-sudachi-elasticsearch導入
+    * analysis-sudachi-elasticsearchを導入
 
 ## 構築方法
 - Dockerをインストールする。
@@ -35,25 +37,27 @@ GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し�
   $ sudo apt update
   $ sudo apt install docker docker-compose
   ```
-- 初期設定を行う。
+- 初期設定を行う。ホスト側で以下を実行する。
+  必要なディレクトリの作成やツールのダウンロードを行う。
   ```
   $ ./init.sh
   ```
 
 - docker-composeでコンテナを起動する。
+  JupyterLab、Elasticsearch、Kibanaのコンテナが起動する。
   ```
   $ sudo docker-compose up
   ```
 
 ## 各環境へのアクセス方法
 - Jupyter Labコンテナ
-http://[ホスト]:8888
+  * http://[ホスト]:8888
 
 - Kibana
-http://[ホスト]:5601
+  * http://[ホスト]:5601
 
 - Elasticsearch
-http://[ホスト]:9800
+  * http://[ホスト]:9800
 
 ## 使い方
 基本的にJupyter Lab上での作業となる。
