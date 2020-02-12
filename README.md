@@ -23,7 +23,7 @@ GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し�
 | Kibana | docker.elastic.co/kibana/kibana:7.5.0 |
 
 ## Dockerイメージ概要
-  -Jupyter Lab
+  -Jupyter Lab 
     * 機械学習用の各種ツールを導入
     * Sudachi、Ginzaを導入
     * matplitlib用の日本語フォントを導入
