@@ -27,9 +27,11 @@ GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し�
     * 機械学習用の各種ツールを導入
     * Sudachi、Ginzaを導入
     * matplitlib用の日本語フォントを導入
+    * Jupyter Labで作業したデータはホスト側の`./jupyter/data`に保存される。
 
   - Elasticsearch 
     * analysis-sudachi-elasticsearchを導入
+    * Elasticsearchのデータはホスト側の`./elasticsearch/es-data`に保存される。
 
 ## 構築方法
 - Dockerをインストールする。
