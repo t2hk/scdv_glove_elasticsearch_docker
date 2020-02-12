@@ -52,23 +52,21 @@ GloVeによる単語ベクトル、SCDVによる文章ベクトルを活用し�
   ```
 
 ## 各環境へのアクセス方法
-- Jupyter Labコンテナ
-  * http://[ホスト]:8888
+各コンテナへのアクセスは以下の通りである。
 
-- Kibanaコンテナ
-  * ホスト側からのアクセス : http://[ホスト]:5601
-  * コンテナ間のアクセス : http://kibana:5601
-
-- Elasticsearchコンテナ
-  * ホスト側からのアクセス : http://[ホスト]:9200
-  * コンテナ間のアクセス : http://elasticsearch:9200
+| コンテナ | ホストからのアクセス | コンテナ間のアクセス |
+| --- | --- | --- |
+| Jupyter Lab | http://[ホスト]:8888 | - |
+| Kibana | http://[ホスト]:5601 | http://kibana:5601 |
+| Elasticsearchコンテナ | http://[ホスト]:9200 | http://elasticsearch:9200 |
 
 ## データの保存場所
-- Jupyter Labコンテナ
-  * Jupyter Labで作業したデータはホスト側の`./jupyter/data`に保存される。
+各コンテナのデータはホスト側に永続するように設定しており、以下のディレクトリに保存される。
 
-- Elasticsearchコンテナ
-  * Elasticsearchのデータはホスト側の`./elasticsearch/es-data`に保存される。
+| コンテナ | ホスト側の保存場所 |
+| --- | --- |
+| Jupyter Lab | ./jupyter/data/ |
+| Elasticsearch | ./elasticsearch/es-data |
 
 ## 使い方
 基本的にJupyter Lab上での作業となる。
