@@ -22,52 +22,25 @@ class elasticsearchClient():
         results = []
 
         for item in items:
-            index = json.dumps(item['_id'])
-            title = json.dumps(
-                    item['_source']['title']['text'], 
+            id = json.dumps(
+                    item['_id'], 
                     indent=2, ensure_ascii=False)
-            title_id = json.dumps(
-                    item['_source']['title']['title_id'], 
+            doc_id = json.dumps(
+                    item['_source']['doc_id'], 
+                    indent=2, ensure_ascii=False)
+            category = json.dumps(
+                    item['_source']['category'], 
+                    indent=2, ensure_ascii=False)
+            text_id = json.dumps(
+                    item['_source']['text_id'], 
+                    indent=2, ensure_ascii=False)
+            text = json.dumps(
+                    item['_source']['text'], 
                     indent=2, ensure_ascii=False)
 
-            _cause = item['_source']['cause'] 
-            cause = []
-            cause_id = []
-            for val in _cause:
-                cause.append(json.dumps(val['text'], ensure_ascii=False))
-                cause_id.append(json.dumps(val['cause_id'], ensure_ascii=False))
-
-            situation = []
-            situation_id = []
-            _situation = item['_source']['situation'] 
-            for val in _situation:
-                situation.append(json.dumps(val['text'], ensure_ascii=False))
-                situation_id.append(json.dumps(val['situation_id'], ensure_ascii=False))
-
-            measures = []
-            measures_id = []
-            _measures = item['_source']['measures']
-            for val in _measures:
-                measures.append(json.dumps(val['text'], ensure_ascii=False))
-                measures_id.append(json.dumps(val['measures_id'], ensure_ascii=False))
-            title_tokens = self.tokenize(title)
-            if len(title_tokens) > 0:
-              results.append((index, "title", title_id, title, title_tokens)) 
-
-            for (id, val) in zip(cause_id, cause):
-              val_tokens = self.tokenize(val)
-              if len(val_tokens) > 0:
-                results.append((index, "cause", id, val, val_tokens)) 
-
-            for (id, val) in zip(situation_id, situation):
-              val_tokens = self.tokenize(val)
-              if len(val_tokens) > 0:
-                results.append((index, "situation", id, val, val_tokens)) 
-
-            for (id, val) in zip(measures_id, measures):
-              val_tokens = self.tokenize(val)
-              if len(val_tokens) > 0:
-                results.append((index, "measures", id, val, val_tokens)) 
+            tokens = self.tokenize(text)
+            if len(tokens) > 0:
+              results.append((id, doc_id, category, text_id, text, tokens)) 
 
         return results
 
@@ -126,11 +99,11 @@ def main(args):
     #with open(args.output, "w") as f_csv:
     with open(output_csv, "w") as f_csv:
         with open(output_txt, "w") as f_txt:
-            f_csv.writelines('ID,種別,文章ID,文章,分かち書き\n')
+            f_csv.writelines('ID,doc_id,種別,文章ID,文章,分かち書き\n')
 
             for result in results:
-                tokens = " ".join(result[4])
-                f_csv.writelines(result[0] + ',' + '"' + result[1] + '",' + result[2] + ',' + result[3].strip() + ',"' + tokens + '"\n')
+                tokens = " ".join(result[5])
+                f_csv.writelines(result[0] +',' + result[1] + ',' + result[2] + ',' + result[3] + ',' + result[4].strip() + ',"' + tokens + '"\n')
                 f_txt.writelines(tokens + '\n')
 
 if __name__ == '__main__':

@@ -22,37 +22,18 @@ def parse_args():
 
     return parser.parse_args()
 
-def create_script(sentence_type, sentence_id, vector):
-    script = ""
-
-    if sentence_type == "title":
-        script = '{"script":{"source":"ctx._source.title.vector = params.vector","lang":"painless","params":{"id":"' + sentence_id + '","vector":' + vector + '}}}'
-    else:
-        script = '{"script":{"source":"for (int i = 0; i < ctx._source.' + sentence_type + '.length; i++) {if(ctx._source.' + sentence_type + '[i].' + sentence_type + '_id == params.id) { ctx._source.' + sentence_type + '[i].vector = params.vector; break}}","lang":"painless","params":{"id":"' + sentence_id + '","vector":"' + vector + '"}}}'
-
-    return script
-
 def main(args):
     client = elasticsearchClient(args.host, args.port)
 
     scdv_vec = scdv.build_model(args.input_csv, 20, "gmm_cluster.pkl", "gmm_prob_cluster.pkl")
 
-    for index, doc_id, sentence_id, category, vector in scdv_vec:
+    for index, doc_id, text_id, category, vector in scdv_vec:
+        # ベクトルが全てゼロの場合、スキップする
+        if not all(vector) and not any(vector):
+            continue
+
         if index == 'anzen':
-            sentence_type = "title"
-
-            if '_c_' in sentence_id:
-                sentence_type = "cause"
-            elif '_m_' in sentence_id:
-                sentence_type = "measures"
-            elif '_s_' in sentence_id:
-                sentence_type = "situation"
-
-            vector = str(vector.tolist())
-            script = create_script(sentence_type, sentence_id, vector)
-            script = script.replace('"[','[').replace(']"',']')
-
-            client.update(index, doc_id, script)
+            client.update(index, doc_id, {'doc':{'vector':vector.tolist()}})
         elif index == 'accident':
             client.update(index, doc_id, {'doc':{'scdv_vector':vector.tolist()}})
 

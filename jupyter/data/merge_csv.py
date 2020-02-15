@@ -20,11 +20,11 @@ def main(args):
 
     # accidentインデックスのデータのIDと分かち書きのみ取得し、INDEX列を追加する
     new_accident_df = accident_df.drop('sentence', axis=1).assign(index = 'accident').assign(sentence_id = 0)
-
-    new_anzen_df = anzen_df.rename(columns={'種別':'category'}).drop('文章', axis=1).assign(index = 'anzen')
+    new_anzen_df = anzen_df.drop('doc_id',axis=1).rename(columns={'種別':'category'}).drop('文章', axis=1).assign(index = 'anzen')
     new_anzen_df = new_anzen_df.rename(columns={'文章ID':'sentence_id'}).rename(columns={'分かち書き':'tokens'})
 
     merge_df = pd.concat([new_anzen_df, new_accident_df], sort=False)
+    merge_df = merge_df.drop(merge_df['tokens'].isnull())
     merge_df.to_csv(merge_csv, encoding='utf_8')
 
 if __name__ == '__main__':

@@ -2,51 +2,23 @@
   "aliases" : {},
   "mappings":{
     "properties" : {
-      "title" : {
-        "type" : "nested",
-        "properties" : {
-          "title_id" : {"type" : "keyword"},
-          "text" : { "type" : "text"  },
-          "vector" : {
-            "type" : "dense_vector",
-            "dims" : 1000
-          }
-        }
+      "doc_id" : {
+        "type" : "keyword"
+      }, 
+      "category" : {
+        "type" : "keyword"
       },
-      "situation" : {
-        "type" : "nested",
-        "properties" : {
-          "situation_id" : {"type" : "keyword"},
-          "text" : { "type" : "text"  },
-          "vector" : {
-            "type" : "dense_vector",
-            "dims" : 1000
-          }
-        }
+      "text_id" : {
+        "type" : "keyword"
       },
-      "cause" : {
-        "type" : "nested",
-        "properties" : {
-          "cause_id" : {"type" : "keyword"},
-          "text" : { "type" : "text"  },
-          "vector" : {
-            "type" : "dense_vector",
-            "dims" : 1000
-          }
-        }
-      },
-      "measures" : {
-        "type" : "nested",
-        "properties" : {
-          "measures_id" : {"type" : "keyword"},
-          "text" : { "type" : "text"  },
-          "vector" : {
-            "type" : "dense_vector",
-            "dims" : 1000
-          }
-        }
-      }    
-    }    
+      "text" : {
+        "type" : "text"
+      }, 
+      "vector" : {
+        "type" : "dense_vector",
+        "dims" : 1000
+      }
+    }
   },
   "settings": {
     "index": {
