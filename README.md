@@ -101,3 +101,8 @@ GloVeによる単語ベクトルを使い、類似語を抽出する。
    - 学習したトピック毎に特徴的な単語をWordCloudで可視化
    - pyLDAvisによるトピックの分布を可視化
 
+### 4. 類似文書の検索
+GloVeを使用したSCDVによる類似文書検索を行う。Elasticsearchのvectorフィールドを使用したcosineSimilarityによる類似検索の例である。
+
+1. Elasticsearch_sim_search.ipyを開く。
+2. セルを上から順に実行する。
