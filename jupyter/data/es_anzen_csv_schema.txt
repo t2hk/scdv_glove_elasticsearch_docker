@@ -13,10 +13,6 @@
       },
       "text" : {
         "type" : "text"
-      }, 
-      "vector" : {
-        "type" : "dense_vector",
-        "dims" : 1000
       }
     }
   },

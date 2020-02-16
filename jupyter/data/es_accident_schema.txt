@@ -7,10 +7,6 @@
       },
       "category" : {
         "type" : "keyword"
-      },
-      "scdv_vector" : {
-        "type" : "dense_vector",
-        "dims" : 1000
       }
     }
   },

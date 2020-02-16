@@ -1,0 +1,23 @@
+{
+  "aliases" : {},
+  "mappings":{
+    "properties" : {
+      "index" : {
+        "type" : "keyword"
+      },
+      "doc_id" : {
+        "type" : "keyword"
+      }, 
+      "category" : {
+        "type" : "keyword"
+      },
+      "text_id" : {
+        "type" : "keyword"
+      }, 
+      "vector" : {
+        "type" : "dense_vector",
+        "dims" : 200
+      }
+    }
+  }
+}

@@ -48,25 +48,6 @@ class SparseCompositeDocumentVectors:
         # GloVeの単語ベクトルを読み込む
         self.glove_vectors = KeyedVectors.load_word2vec_format(self.gensim_glove_word_vector_file, binary=False)
 
-    def cluster_GMM2(self):   
-        glove_vectors = self.glove_vectors.vectors
-        
-        # Initalize a GMM object and use it for clustering.
-        gmm_model = GaussianMixture(n_components=num_clusters, covariance_type="tied", init_params='kmeans', max_iter=100)
-        # Get cluster assignments.
-        gmm_model.fit(glove_vectors)
-        idx = gmm_model.predict(glove_vectors)
-        print ("Clustering Done...")
-        # Get probabilities of cluster assignments.
-        idx_proba = gmm_model.predict_proba(glove_vectors)
-        # Dump cluster assignments and probability of cluster assignments. 
-        pickle.dump(idx, open(self.pname1,"wb"))
-        print ("Cluster Assignments Saved...")
-
-        pickle.dump(idx_proba,open(self.pname2, "wb"))
-        print ("Probabilities of Cluster Assignments Saved...")
-        return (idx, idx_proba)        
-        
     def cluster_GMM(self):
         # GMMによるクラスタリング
         
@@ -221,7 +202,7 @@ def build_model(csv_file, num_clusters, gmm_pname1, gmm_pname2):
     df = pd.read_csv(csv_file)
 
     index = df['index']
-    doc_id = df['ID']
+    id = df['ID']
     sentence_id = df['sentence_id']
     categories = df['category']
     tokens = df['tokens']
@@ -234,7 +215,7 @@ def build_model(csv_file, num_clusters, gmm_pname1, gmm_pname2):
 
     print("sentence_id len:{}, gwbowv len:{}".format(len(sentence_id), len(gwbowv)))
 
-    return zip(index, doc_id, sentence_id, categories, gwbowv)
+    return zip(index, id, sentence_id, categories, gwbowv)
 
 def main(args):
     df = pd.read_csv(args.csv_file)
