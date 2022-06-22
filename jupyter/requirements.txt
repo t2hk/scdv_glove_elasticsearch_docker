@@ -2,7 +2,7 @@ elasticsearch==7.0.4
 gensim==3.8.0
 lightgbm==2.3.0
 matplotlib==3.1.1
-numpy==1.17.4
+numpy==1.22.0
 pandas==0.25.3
 pyLDAvis==2.1.2
 scikit-learn==0.22
